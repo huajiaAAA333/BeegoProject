@@ -1,8 +1,12 @@
 package controllers
 
+import "C"
 import (
+	"BeeGoDemo/models"
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
+	"io/ioutil"
 )
 
 type MainController struct {
@@ -10,6 +14,7 @@ type MainController struct {
 }
 
 func (c *MainController) Get() {
+
 	//获取get请求的不同方法
 	name := c.Ctx.Input.Query("name")
 	age := c.Ctx.Input.Query("age")
@@ -32,6 +37,29 @@ func (c *MainController) Get() {
 /**
 该post方法是处理post类型的的请求的时候要调用的方法
  */
+
+func (c*MainController) post()  {
+	//body := c.Ctx.Request.Body
+	dataByes,err :=ioutil.ReadAll(c.Ctx.Request.Body)
+	if err !=nil {
+		c.Ctx.WriteString("数据接受失败")
+		return
+	}
+	//json包解析
+	var person models.Person
+	err = json.Unmarshal(dataByes,$person)
+	if err !=nil {
+		c.Ctx.WriteString("数据解析失败")
+		return
+	}
+	fmt.Println("用户民:",person.Name,",年龄",person.Age)
+	c.Ctx.WriteString("名户名:"+person.Name)
+
+}
+
+
+
+
 func (c * MainController) Post(){
 	fmt.Println("post类型的请求")
 	user:= c.Ctx.Request.FormValue("user")
