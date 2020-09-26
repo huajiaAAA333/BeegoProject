@@ -47,7 +47,7 @@ func (c*MainController) post()  {
 	}
 	//json包解析
 	var person models.Person
-	err = json.Unmarshal(dataByes,$person)
+	err = json.Unmarshal(dataByes,&person)
 	if err !=nil {
 		c.Ctx.WriteString("数据解析失败")
 		return

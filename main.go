@@ -3,6 +3,7 @@ package main
 import (
 	_ "BeeGoDemo/routers"
 	"astaxie/beego"
+	"database/sql"
 	"fmt"
 )
 
@@ -24,7 +25,14 @@ func main() {
 	dbUser := config.String("db_user")
 	dbPassword := config.String("db_passward")
 	dbIP := config.String("db_IP")
-	db
+	dbName := config.String("db_name")
+
+	db,err :=sql.Open(driver,dbUser+":"+dbPassword+"@tcp("+dbIP+")/"+dbName+"?charset=utf8")
+
+	if err != nil {}
+	fmt.Println(db)
+	beego.Run()
+
 
 
 
