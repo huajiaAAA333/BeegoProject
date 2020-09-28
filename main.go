@@ -2,9 +2,9 @@ package main
 
 import (
 	_ "BeeGoDemo/routers"
-	"astaxie/beego"
 	"database/sql"
 	"fmt"
+	"github.com/astaxie/beego"
 )
 
 func main() {
@@ -26,6 +26,21 @@ func main() {
 	dbPassword := config.String("db_passward")
 	dbIP := config.String("db_IP")
 	dbName := config.String("db_name")
+	fmt.Println(dbdriver,dbUser,dbPassword)
+
+
+	//联机数据库
+	connUrl := dbUser +":"+dbPassword+"@tcp("+dbIP")/"+dbName+"?charest=utf8"
+	db,err := sql.Open(dbdriver,connUrl)
+	db,err != nil {//err不为nil,表示连接数据库时出现了错误,程序就在此中断,尽早解决
+		panic("数据库连接错误,请检查配置")
+	}
+	fmt.Println(db)
+
+
+
+
+
 
 	db,err :=sql.Open(driver,dbUser+":"+dbPassword+"@tcp("+dbIP+")/"+dbName+"?charset=utf8")
 
